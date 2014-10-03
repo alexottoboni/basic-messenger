@@ -9,7 +9,15 @@ class MsgClient:
 		self.port = port
 
 		# True is sending mode, False is Recieving mode
-		self.mode = mode   
+		self.mode = mode  
+
+	@staticmethod
+	def get_my_ip():
+		s = socket(AF_INET, SOCK_DGRAM) 
+		s.connect(('8.8.8.8', 80)) 
+		my_ip = (s.getsockname()[0]) 
+		s.close()
+		return my_ip 
 
 	def send_msg(self):
 	    target = raw_input("Who to send message to: ")
@@ -47,7 +55,7 @@ if __name__ == "__main__":
 		client.send_msg()
 	
 	else:
-		host = raw_input("My Local Address: ")
+		my_ip = MsgClient.get_my_ip()
 		client = MsgClient(host, 4446, False)
 		client.get_msg()
 
