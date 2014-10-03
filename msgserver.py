@@ -33,8 +33,15 @@ class MsgServer:
 	def parse_msg(self, data):
 		return json.loads(data)
 
+	@staticmethod
+	def get_my_ip():
+		s = socket(AF_INET, SOCK_DGRAM) 
+		s.connect(('8.8.8.8', 80)) 
+		my_ip = (s.getsockname()[0]) 
+		s.close()
+		return my_ip
 
 if __name__ == "__main__":
-        my_ip = raw_input("IP Address: ")
-	server = MsgServer(str(my_ip), 4446)
-	server.start()
+    my_ip = MsgServer.get_my_ip()
+    server = MsgServer(str(my_ip), 4446)
+    server.start()
