@@ -15,12 +15,10 @@ class MsgClient:
 	    target = raw_input("Who to send message to: ")
 	    text = raw_input("Enter data: ")  
 	    
-	    print "Sender: ", sender 
-	    
-	    data = Message(sender, target, text)  
-	    data = json.dumps(data)
+	    data = Message("192.168.1.0", target, text)  
+	    data = data.get_json()
 	    s = socket(AF_INET, SOCK_STREAM)
-	    s.connect((host,port))  
+	    s.connect((self.host, self.port))  
 	    s.send(data)
 	    msg = s.recv(512)
 	    print "Message from server : " + msg

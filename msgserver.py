@@ -17,7 +17,7 @@ class MsgServer:
 		
 	    new_socket, address = s.accept()
 	    data = new_socket.recv(512)
-	    new_msg = parse_msg(data)
+	    new_msg = self.parse_msg(data)
 
 	    if data:
 		new_socket.send("Recieved Message")
