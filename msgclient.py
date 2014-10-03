@@ -14,7 +14,6 @@ class MsgClient:
 	def send_msg(self):
 	    target = raw_input("Who to send message to: ")
 	    text = raw_input("Enter data: ")  
-	    sender = socket.gethostname()
 	    
 	    print "Sender: ", sender 
 	    
