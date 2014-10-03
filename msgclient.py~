@@ -44,7 +44,7 @@ if __name__ == "__main__":
 	
 	mode = raw_input("Send or Get?: ")
 
-	if mode.upper() == "send":
+	if mode.upper() == "SEND":
 		host = raw_input("Server Address: ")
 		client = MsgClient(host, 4446, True)
 		client.send_msg()
