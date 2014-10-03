@@ -56,7 +56,7 @@ if __name__ == "__main__":
 	
 	else:
 		my_ip = MsgClient.get_my_ip()
-		client = MsgClient(host, 4446, False)
+		client = MsgClient(my_ip, 4446, False)
 		client.get_msg()
 
 	
