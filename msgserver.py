@@ -10,36 +10,46 @@ class MsgServer:
 		self.port = port
 
 	def start(self):
+		"""
+			Starts the server to route messages
+		"""
+		# Creates new socket to listen to
 	    s = socket(AF_INET, SOCK_STREAM)
 	    s.bind((self.host, self.port))
 	    s.listen(1)
 	    print "Listening for message.. "
 		
+		# Process a new message
 	    new_socket, address = s.accept()
 	    data = new_socket.recv(512)
 	    new_msg = self.parse_msg(data)
 
 	    if data:
-		new_socket.send("Recieved Message")
-	    s.close()
+			new_socket.send("Recieved Message")
+	    	s.close()
 
 	    s = socket(AF_INET, SOCK_STREAM)
-	    s.connect((new_msg[Message.RECIPIENT_KEY], self.port))  
-	    s.send(json.dumps(new_msg))
+	    s.connect((new_msg[Message.RECIPIENT_KEY], self.port))
+	    new_msg = self.package_msg(new_msg)  
+	    s.send(new_msg)
 
 	    s.close()
 
-
 	def parse_msg(self, data):
+		"""
+			Takes JSON string and turns into a dictionary
+
+			@data: The JSON formatted string
+		"""
 		return json.loads(data)
 
-	@staticmethod
-	def get_my_ip():
-		s = socket(AF_INET, SOCK_DGRAM) 
-		s.connect(('8.8.8.8', 80)) 
-		my_ip = (s.getsockname()[0]) 
-		s.close()
-		return my_ip
+	def package_msg(self, data):
+		"""
+			Takes a dictionary and dumps it as a JSON string
+
+			@data: The python dictionary
+		"""
+		return json.dumps(data)
 
 if __name__ == "__main__":
     my_ip = MsgServer.get_my_ip()

@@ -19,9 +19,20 @@ class Message:
 		self.data[Message.MESSAGE_KEY] = message
 
 	def get_json(self):
+		"""
+			Method to dump this Message's dictionary to JSON
+
+			Returns string representation of the JSON
+		"""
 		return json.dumps(self.data)
 
 	def is_json_valid(self, json_dict):
+		"""
+			Checks if the JSON we are attempting to load
+			the message from is valid 
+
+			@json_dict: The dictionary that was created from the JSON data
+		"""
 		keys_in_json = json_dict.keys()
 		has_only_three_keys = (len(keys_in_json) == 3)
 
@@ -33,6 +44,11 @@ class Message:
 		return has_correct_keys and has_only_three_keys
 
 	def set_from_json(self, json_str):
+		"""
+			Method to set this Messages's data to JSON data
+
+			@json_str: The string representation of the json we are loading
+		"""
 		json_dict = json_str.loads(json_str)
 		is_valid = self.is_json_valid(json_dict)
 
