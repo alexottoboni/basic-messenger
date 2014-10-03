@@ -14,9 +14,9 @@ class Message:
 			@message: The contents of the message being sent
 		"""
 		self.data = {}
-		self.data[SENDER_KEY] = sender
-		self.data[RECIPIENT_KEY] = recipient
-		self.data[MESSAGE_KEY] = message
+		self.data[Message.SENDER_KEY] = sender
+		self.data[Message.RECIPIENT_KEY] = recipient
+		self.data[Message.MESSAGE_KEY] = message
 
 	def get_json(self):
 		return json.dumps(self.data)
@@ -25,7 +25,7 @@ class Message:
 		keys_in_json = json_dict.keys()
 		has_only_three_keys = (len(keys_in_json) == 3)
 
-		if (SENDER_KEY in keys_in_json) and (RECIPIENT_KEY in keys_in_json) and (MESSAGE_KEY in keys_in_json):
+		if (Message.SENDER_KEY in keys_in_json) and (Message.RECIPIENT_KEY in keys_in_json) and (Message.MESSAGE_KEY in keys_in_json):
 			has_correct_keys = True
 		else:
 			has_correct_keys = False
