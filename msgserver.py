@@ -1,5 +1,6 @@
 from socket import * 
 from Message import *
+from NetworkUtilities import *
 import json
 
 class MsgServer:
@@ -52,6 +53,6 @@ class MsgServer:
         return json.dumps(data)
 
 if __name__ == "__main__":
-    my_ip = MsgServer.get_my_ip()
+    my_ip = NetworkUtilities.get_my_ip()
     server = MsgServer(str(my_ip), 4446)
     server.start()
