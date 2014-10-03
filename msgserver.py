@@ -25,7 +25,7 @@ class MsgServer:
 
 	    s = socket(AF_INET, SOCK_STREAM)
 	    s.connect((new_msg[Message.RECIPIENT_KEY], self.port))  
-	    s.send(new_msg)
+	    s.send(json.dumps(new_msg))
 
 	    s.close()
 

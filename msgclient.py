@@ -33,7 +33,7 @@ class MsgClient:
 		new_socket, address = s.accept()
 		data = new_socket.recv(512)
 
-		got_msg = json.dumps(data)
+		got_msg = json.loads(data)
 		print "Message from: ", got_msg[Message.SENDER_KEY]
 		print got_msg[Message.MESSAGE_KEY]
           
