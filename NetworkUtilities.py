@@ -1,6 +1,9 @@
+from socket import *
+
 class NetworkUtilities:
 
-    def get_my_ip(self):
+    @staticmethod
+    def get_my_ip():
         """
             Simple method to get the local ip address of the current machine
         """
