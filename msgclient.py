@@ -1,24 +1,59 @@
-# TCP Client Code
- 
-host="192.168.1.4"            # Set the server address to variable host
- 
-port=4446               # Sets the variable port to 4446
- 
-from socket import *             # Imports socket module
- 
+from Message import *
+from socket import *   
+import json
+
+class MsgClient:
+
+	def __init__(self, host = 127.0.0.1, port = 4446, mode = False):
+		self.host = host
+		self.port = port
+
+		# True is sending mode, False is Recieving mode
+		self.mode = mode   
+
+	def send_msg(self):
+		target = raw_input("Who to send message to: ")
+	    text = raw_input("Enter data: ")  
+	    sender = socket.gethostname()
+	    
+	    print "Sender: ", sender 
+	    
+	    data = Message(sender, target, text)  
+	    data = json.dumps(data)
+	    s = socket(AF_INET, SOCK_STREAM)
+	    s.connect((host,port))  
+	    s.send(data)
+	    msg = s.recv(512)
+	    print "Message from server : " + msg
+	    s.close()
+
+	def get_msg(self):
+		s = socket(AF_INET, SOCK_STREAM)
+		s.bind((self.host, self.port))
+		s.listen(1)
+		print "Listening for message.. "
+		
+		new_socket, address = s.accept()
+		data = new_socket.recv(512)
+
+		got_msg = json.dumps(data)
+		print "Message from: ", got_msg[Message.SENDER_KEY]
+		print got_msg[Message.MESSAGE_KEY]
+          
+if __name__ == "__main__":
+	
+	mode = raw_input("Send or Get?: ")
+
+	if mode.upper() == "send":
+		host = raw_input("Server Address: ")
+		client = MsgClient(host, 4446, True)
+		client.send_msg()
+	
+	else:
+		host = raw_input("My Local Address: ")
+		client = MsgClient(host, 4446, False)
+		client.get_msg()
+
 while 1:
 
-    data = raw_input("Enter data: ")
-
-    s=socket(AF_INET, SOCK_STREAM)      # Creates a socket
-             # Connect to server address
-    s.connect((host,port))  
-
-    s.send(data)
-         
-    msg=s.recv(512)            # Receives data upto 1024 bytes and stores in variables msg
-         
-    print "Message from server : " + msg
-     
-    s.close()                            # Closes the socket
-    # End of code
+	

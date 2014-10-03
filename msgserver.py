@@ -1,30 +1,39 @@
-# TCP Server Code
- 
-host="192.168.1.4"                # Set the server address to variable host
-port=4446                   # Sets the variable port to 4446
-from socket import *                # Imports socket module
- 
-s=socket(AF_INET, SOCK_STREAM)
- 
-s.bind((host,port))                 # Binds the socket. Note that the input to
-                                            # the bind function is a tuple
- 
-                      # Sets socket to listening state with a  queue
-                                            # of 5 connection
+from socket import * 
+from Message import *
+import json
 
-print "Listening for connections.. "
+class MsgServer:
 
-s.listen(1)  
+	def __init__(self, host = "127.0.0.1", port = 4446):
+		self.connections = {}
+		self.host = host
+		self.port = port
 
-while(1): 
-     
-    q,addr=s.accept()   
-    data = q.recv(1024)   
+	def start(self):
+		s = socket(AF_INET, SOCK_STREAM)
+		s.bind((self.host, self.port))
+		s.listen(1)
+		print "Listening for message.. "
+		
+		new_socket, address = s.accept()
+		data = new_socket.recv(512)
+		new_msg = parse_msg(data)
 
-    if data:       
-        print addr, data
-        q.send(data)                      
- 
-s.close()
- 
-# End of code
+		if data:
+			new_socket.send("Recieved Message")
+		s.close()
+
+		s = socket(AF_INET, SOCK_STREAM)
+	    s.connect((new_msg[Message.RECIPIENT_KEY, port))  
+	    s.send(new_msg)
+
+	    s.close()
+
+
+	def parse_msg(self, data):
+		return json.loads(data)
+
+
+if __name__ == "__main__":
+	server = MsgServer()
+	server.start()
