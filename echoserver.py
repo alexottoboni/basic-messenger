@@ -14,17 +14,16 @@ s.bind((host,port))                 # Binds the socket. Note that the input to
 
 print "Listening for connections.. "
 
-s.listen(5)  
+s.listen(1)  
 
 while(1): 
      
-    q,addr=s.accept()               # Accepts incoming request from client and returns
-                                                # socket and address to variables q and addr
-    data = q.recv(1024)
-                          
-    if data:
-        print data                 
-        q.send(data)                        
+    q,addr=s.accept()   
+    data = q.recv(1024)   
+
+    if data:       
+        print addr, data
+        q.send(data)                      
  
 s.close()
  
