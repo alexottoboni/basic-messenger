@@ -65,7 +65,7 @@ class MsgClient:
         data = new_socket.recv(512)
         recieved_msg = json.loads(data)
         print "Message from: ", recieved_msg[Message.SENDER_KEY]
-        print got_msg[Message.MESSAGE_KEY]
+        print recieved_msg[Message.MESSAGE_KEY]
           
 if __name__ == "__main__":
     
